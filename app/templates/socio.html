@@ -1,0 +1,474 @@
+{% extends "base.html" %} {% block content %}
+<main>
+    <div class="container-fluid">
+        <!-- Section: Edit Account -->
+        <section class="section">
+            <div class="row">
+                <a href="/ricevuta/{{socio.id}}" id="" class="btn btn-rounded btn-dark">Fai fattura</a>
+                <a id="" class="btn btn-rounded btn-dark">Imposta Messaggio</a>
+                <a href="/api/elimina/socio/{{socio.id}}" id="" class="btn btn-rounded btn-red">ELIMINA</a>
+            </div>
+            <!-- First row -->
+            <div class="row" style="margin-top: 20px;">
+                <!-- First column -->
+                <div class="col-lg-4 mb-4">
+                    <!-- Card -->
+                    <div class="card card-cascade narrower">
+                        <!-- Card image -->
+                        <div class="view view-cascade gradient-card-header primary-color">
+                            <h5 class="mb-0 font-weight-bold">Info</h5>
+                        </div>
+                        <!-- Card image -->
+
+                        <!-- Card content -->
+                        <div class="card-body card-body-cascade">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p class="mt-4 text-muted">Stato mensile:</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <h2>
+                                        {% if socio.èInRegola() == False %} <a class="badge badge-danger fa-2x" style="margin-top: 15px;">No</a> {% else %} <a class="badge badge-success fa-2x" style="margin-top: 15px;">Si</a> {% endif %}
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p class="mt-4 text-muted">PayDay:</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <h2>
+                                        <p class="mt-4 text-muted">{{socio.payDay}}</p>
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p class="mt-4 text-muted"><strong>Corsi Da Pagare:</strong> {% if socio.èInRegola() == True %}Nessuno{% endif %}</p>
+                                    {% if socio.èInRegola() == False %} {% for m,c in socio.getCorsiPerMesiDaPagare() %}
+                                    <p class="mt-4 text-muted">{{c.nome}} - {{m}}</p>
+                                    {% endfor %} {% endif %}
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p class="mt-4 text-muted"><strong>Extra Pagati:</strong></p>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p class="mt-4 text-muted">Soldi ricevuti dal socio fino ad oggi: <strong>{{socio.getSoldiDatiFinoAdOra()}}€</strong></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mt-4 text-muted">Corsi del socio:</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            {% for corsi in socio.getCorsi() %}
+                                            <tr id="">
+                                                <td>
+                                                    <a href="/corso/{{corsi.id}}"><strong>{{corsi.nome}}</strong></a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div style="margin-top: 0px;" class="md-form form-sm mb-0">
+                                                        <input id="euroModifica_{{corsi.id}}" data-euro="{{corsi.quantoPaga(socio.id)}}" name="euroModifica" type="text" value="" class="form-control form-control-sm" disabled />
+                                                        <label for="euroModifica_{{corsi.id}}" class="">€{{corsi.quantoPaga(socio.id)}}</label>
+                                                    </div>
+                                                </td>
+                                                <td class="">
+                                                    <div class="row text-center">
+                                                        <button id="{{corsi.id}}" style="margin-left: 13px; margin-top: -3px;" type="button" class="btn btn-primary btn-sm changeCorso"><i class="fas fa-pen pen"></i></button>
+                                                        <button id="{{corsi.id}}" style="margin-top: -3px;" type="button" class="btn btn-danger btn-sm removeCorso"><i class="fas fa-trash-alt"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            <tr class="text-center">
+                                                <td>
+                                                    <select id="idCorsoDaAggiungere" name="addCorsi" class="mdb-select colorful-select dropdown-primary md-form" searchable="Cerca" required>
+                                                        <option value="" disabled selected>Corsi</option>
+                                                        {% for c in socio.getCorsiIscrivibili() %}
+                                                        <option value="{{c.id}}">{{c.nome}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <div class="md-form form-sm mb-0">
+                                                        <input id="euro" name="euro" type="text" value="" class="form-control form-control-sm" required />
+                                                        <label for="euro" class="">€ Euro</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button style="margin-top: 25px;" id="addCorsi" type="button" class="btn btn-primary btn-sm">Aggiungi Corsi</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card content -->
+                    </div>
+                    <!-- Card -->
+                </div>
+                <!-- First column -->
+
+                <!-- Second column -->
+                <div class="col-lg-8 mb-4">
+                    <!-- Card -->
+                    <div class="card card-cascade narrower">
+                        <!-- Card image -->
+                        <div class="view view-cascade gradient-card-header primary-color">
+                            <h5 class="mb-0 font-weight-bold">Profilo Socio</h5>
+                        </div>
+                        <!-- Card image -->
+
+                        <!-- Card content -->
+                        <div class="card-body card-body-cascade text-center">
+                            <!-- Edit Form -->
+                            <form action="" method="POST" autocomplete="off" id="formOK">
+                                <!-- First row -->
+
+                                <div class="row">
+                                    <!-- First column -->
+                                    <div class="col-md-6">
+                                        <div class="md-form mb-0">
+                                            <input name="nome" type="text" id="form1" class="form-control validate" value="{{socio.nome}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Nome</label>
+                                        </div>
+                                    </div>
+                                    <!-- Second column -->
+                                    <div class="col-md-6">
+                                        <div class="md-form mb-0">
+                                            <input name="cognome" type="text" id="form1" class="form-control validate" value="{{socio.cognome}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Cognome</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- First row -->
+
+                                <!-- First row -->
+                                <div class="row">
+                                    <!-- First column -->
+                                    <div class="col-md-6">
+                                        <div class="md-form mb-0">
+                                            <input name="dataNascita" type="text" id="data" class="form-control" value="{{socio.dataNascita}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Data di Nascita</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Second column -->
+                                    <div class="col-md-6">
+                                        <div class="md-form mb-0">
+                                            <input name="comuneNascita" type="text" id="form1" class="form-control validate" value="{{socio.comuneNascita}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Comune di Nascita</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- First row -->
+
+                                <!-- Second row -->
+                                <div class="row">
+                                    <!-- First column -->
+                                    <div class="col-md-4">
+                                        <div class="md-form mb-0">
+                                            <input name="comuneResidenza" type="text" id="form1" class="form-control validate" value="{{socio.comuneResidenza}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Comune di Residenza</label>
+                                        </div>
+                                    </div>
+                                    <!-- Second column -->
+
+                                    <div class="col-md-4">
+                                        <div class="md-form mb-0">
+                                            <input name="viaResidenza" type="text" id="form1" class="form-control validate" value="{{socio.viaResidenza}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Via di Residenza</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="md-form mb-0">
+                                            <input name="codicePostaleResidenza" type="text" id="form1" class="form-control validate" value="{{socio.codicePostaleResidenza}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Codice Postale</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Second row -->
+
+                                <!-- Third row -->
+                                <div class="row">
+                                    <!-- First column -->
+                                    <div class="col-md-4">
+                                        <div class="md-form mb-0">
+                                            <input name="codiceFiscale" type="text" id="form1" class="form-control validate" value="{{socio.codiceFiscale}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Codice Fiscale</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="md-form mb-0">
+                                            <input name="email" type="text" id="form1" class="form-control validate" value="{{socio.email}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="md-form mb-0">
+                                            <input name="cellulare" type="text" id="form1" class="form-control validate" value="{{socio.cellulare}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Cellulare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Third row -->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="md-form mb-0 input-group">
+                                            <input name="codTessera" id="inputCodCard" type="text" id="form1" class="form-control validate" value="{{socio.codTessera}}" disabled />
+                                            <label for="form1" id="codCard" data-error="wrong" data-success="right">Codice Tessera</label>
+                                            <div class="input-group-append">
+                                                <button id="scanCard" style="display: none;" class="btn btn-primary btn-sm" type="button">Inserisci</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="md-form mb-0">
+                                            <input name="certificatoMedico" class="form-check-input" type="checkbox" id="checkbox1" {% if socio.certificatoMedico == True %} checked="checked" {% endif %} disabled>
+                                            <label class="form-check-label" for="checkbox1">Certificato Medico</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- First column -->
+                                    <div class="col-md-4">
+                                        <div class="md-form mb-0">
+                                            <input name="nome_genitore" type="text" id="form1" class="form-control validate" value="{{socio.nome_genitore}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Genitore - Nome</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="md-form mb-0">
+                                            <input name="cognome_genitore" type="text" id="form1" class="form-control validate" value="{{socio.cognome_genitore}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Genitore - Cognome</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="md-form mb-0">
+                                            <input name="codfiscale_genitore" type="text" id="form1" class="form-control validate" value="{{socio.codfiscale_genitore}}" disabled />
+                                            <label for="form1" data-error="wrong" data-success="right">Genitore - Codice Fiscale</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="md-form mb-0">
+                                            <textarea name="noteExtra" type="text" id="noteExtra" class="md-textarea form-control" rows="3" disabled>{{socio.noteExtra}}</textarea>
+                                            <label for="form78">Note Extra</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Fourth row -->
+                                <div class="row">
+                                    <div class="col-md-12 text-center my-4">
+                                        <a id="sub" class="btn btn-info btn-rounded primary-color">Modifica Dati</a>
+                                    </div>
+                                </div>
+                                <!-- Fourth row -->
+                            </form>
+                            <!-- Edit Form -->
+                        </div>
+                        <!-- Card content -->
+                    </div>
+                    <!-- Card -->
+                </div>
+                <!-- Second column -->
+            </div>
+            <!-- First row -->
+            <div class="row" style="margin-top: 20px;">
+                <!-- First column -->
+                <div class="col-lg-12">
+                    <!-- Card -->
+                    <div class="card card-cascade narrower">
+                        <!-- Card image -->
+                        <div class="view view-cascade gradient-card-header primary-color">
+                            <h5 class="mb-0 font-weight-bold">Ultimi eventi del socio</h5>
+                        </div>
+                        <!-- Card image -->
+
+                        <!-- Card content -->
+                        <div class="card-body card-body-cascade">
+                            <table id="dtMaterialDesignExample" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Data</th>
+                                        <th>Evento</th>
+                                        <th>Descrizione</th>
+                                        <th>Euro</th>
+                                        <th>Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for e in socio.getEventi() %} 
+                                    {% if e.desc == "I" %}
+                                    <tr>
+                                        <th scope="row">{{e.id}}</th>
+                                        <td>{{e.rDate.strftime("%Y-%m-%d : %H:%M:%S")}}</td>
+                                        <td><strong>Iscrizione</strong></td>
+                                        <td><strong>Iscrizione del Socio</strong></td>
+                                        <td>-</td>
+                                    </tr>
+                                    {% elif e.desc == "E" %}
+                                    <tr>
+                                        <th scope="row">{{e.id}}</th>
+                                        <td>{{e.rDate.strftime("%Y-%m-%d : %H:%M:%S")}}</td>
+                                        <td><strong>Tornello</strong></td>
+                                        <td><strong>Il socio entra</strong></td>
+                                        <td>-</td>
+                                    </tr>
+                                    {% elif e.desc == "IC" %}
+                                    <tr>
+                                        <th scope="row">{{e.id}}</th>
+                                        <td>{{e.rDate.strftime("%Y-%m-%d : %H:%M:%S")}}</td>
+                                        <td><strong>Iscrizione Al Corso</strong></td>
+                                        <td><strong>{{e.getCorso().nome}}</strong></td>
+                                        <td>-</td>
+                                    </tr>
+                                    {% elif e.desc == "R" %}
+                                    <tr>
+                                        <th scope="row">{{e.id}}</th>
+                                        <td>{{e.rDate.strftime("%Y-%m-%d : %H:%M:%S")}}</td>
+                                        <td><strong>Ricevuta</strong></td>
+                                        <td><strong>{{e.getRicevuta().desc}}</strong></td>
+                                        <td>€{{e.getRicevuta().euro}}</td>
+                                        <td><a href="/api/elimina/ricevuta/{{e.getRicevuta().id}}" class="red-text" data-toggle="tooltip" data-placement="top" title="See results"><i class="fas fa-trash-alt fa-lg"></i></a></td>
+                                    </tr>
+                                    {% elif e.desc == "DC" %}
+                                    <tr>
+                                        <th scope="row">{{e.id}}</th>
+                                        <td>{{e.rDate.strftime("%Y-%m-%d : %H:%M:%S")}}</td>
+                                        <td><strong>Disiscrizione</strong></td>
+                                        <td><strong>{{e.getCorso().nome}}</strong></td>
+                                        <td>-</td>
+                                    </tr>
+                                    {% endif %} {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Section: Edit Account -->
+    </div>
+</main>
+{% endblock %} {% block script %}
+<!-- Main layout -->
+<script>
+
+    $("#sub").click(function () {
+        if ($(this).text() == "Modifica Dati") {
+            console.log("OK");
+            $(this).text("Conferma Modifiche");
+            $("#formOK")
+                .find("input")
+                .each(function () {
+                    $(this).prop("disabled", false);
+                });
+            $("#data").pickadate();
+            $("#noteExtra").prop("disabled", false);
+            $("#scanCard").css('display', '')
+            $("#scanCard").click(function () {
+                $.getJSON("../api/getLastCodCard", function (data) {
+                    console.log(data.cod);
+                    if (data.success == "1" ){
+                        $("#codCard").addClass("active");
+                        $("#inputCodCard").val(data.cod)
+                    } 
+                    else {
+                        $("#codCard").addClass("active");
+                        $("#inputCodCard").val("")
+                    }
+                });
+            });
+        } else {
+            $("#formOK").submit();
+        }
+    });
+    $(document).ready(function () {
+        $(".mdb-select").materialSelect();
+
+        $("#dtMaterialDesignExample").DataTable({ pagingType: "simple_numbers", order: [[0, "desc"]] });
+        $("#dtMaterialDesignExample_wrapper")
+            .find("label")
+            .each(function () {
+                $(this).parent().append($(this).children());
+            });
+        $("#dtMaterialDesignExample_wrapper .dataTables_filter")
+            .find("input")
+            .each(function () {
+                const $this = $(this);
+                $this.attr("placeholder", "Cerca");
+                $this.removeClass("form-control-sm");
+            });
+        $("#dtMaterialDesignExample_length").parent("div").remove();
+        $("#dtMaterialDesignExample_info").remove();
+        $("#dtMaterialDesignExample_filter").parent("div").removeClass().addClass("col-6");
+        $("#dtMaterialDesignExample_filter").attr("style", "text-align: left !important");
+        $("#dtMaterialDesignExample_wrapper .dataTables_length").addClass("d-flex flex-row");
+        $("#dtMaterialDesignExample_wrapper .dataTables_filter").addClass("md-form");
+        $("#dtMaterialDesignExample_wrapper select").removeClass("custom-select custom-select-sm form-control form-control-sm");
+        $("#dtMaterialDesignExample_wrapper select").addClass("mdb-select");
+        $("#dtMaterialDesignExample_wrapper .mdb-select").materialSelect();
+        $("#dtMaterialDesignExample_wrapper .dataTables_filter").find("label").remove();
+    });
+
+    //API CALL
+
+
+
+    $(".removeCorso").click(function () {
+        var idCorso = $(this).attr("id");
+        var idSocio = "{{socio.id}}";
+        $.get("../api/eliminaCorsiPerSoci/" + idSocio + "/" + idCorso, function (data) {
+            location.reload()
+        });
+    });
+
+    var euro = 0;
+    $("#euro").keyup(function () {
+        euro = $("#euro").val();
+        console.log(euro);
+    });
+    $("#addCorsi").click(function () {
+        var idCorso = $("#idCorsoDaAggiungere").val();
+        var idSocio = "{{socio.id}}";
+        if (idCorso != null) {
+            $.get("../api/addCorsiPerSoci/" + idSocio + "/" + idCorso + "/" + euro, function (data) {
+                location.reload()
+            });
+        }
+    });
+
+    $(".changeCorso").click(function () {
+        var idCorso = $(this).attr("id");
+        var idSocio = "{{socio.id}}";
+        var euro = $("#euroModifica_"+idCorso).data("euro");
+        $(this).removeClass("btn-primary");
+        $(this).addClass("btn-success");
+        $(this).parent().find(".pen").removeClass("fas fa-pen");
+        $(this).parent().find(".pen").addClass("fas fa-check");
+        $("#euroModifica_" + idCorso).prop("disabled", false);
+        $("#euroModifica_" + idCorso).keyup(function () {
+            euro = $("#euroModifica_" + idCorso).val();
+        });
+        $(this).click(function () {
+            $.get("../api/modificaCorsiPerSoci/" + idSocio + "/" + idCorso + "/" + euro, function (data) {
+                location.reload()
+            });
+        });
+    });
+</script>
+{% endblock %}

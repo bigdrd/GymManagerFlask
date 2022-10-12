@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- Main layout -->
+<main>
+    <div class="container-fluid">
+        <!-- Section: Team v.1 -->
+            <section class="section team-section">
+                <!-- Grid row -->
+                <div class="row text-center">
+                    <!-- Grid column -->
+                    <div class="col-12">
+                        <!-- Card -->
+                        <div class="card card-cascade cascading-admin-card user-card">
+                            <div class="card-body card-body-cascade">
+                                <div class="">
+                                    <h3>Errore, verrà risolto presto!</h3>
+                                    <i class="fas red-text fa-times fa-10x"></i>
+                                </div>
+                            </div>
+                            <!-- Card content -->
+                        </div>
+                        <!-- Card -->
+                    </div>
+                    <!-- Grid column -->
+                </div>
+            </section>
+            <!-- Section: Team v.1 -->
+        </form>
+    </div>
+</main>
+<!-- Main layout -->
+{% endblock %} {% block script %}
+
+<!-- SCRIPTS -->
+<script>
+    // SideNav Initialization
+
+    $(".button-collapse").sideNav();
+
+    // Data Picker Initialization
+    $(".datepicker").pickadate();
+
+    // Material Select Initialization
+    $(document).ready(function () {
+        $(".mdb-select").materialSelect();
+    });
+    $("option[value='123']").prop("disabled", true);
+</script>
+{% endblock %}

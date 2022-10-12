@@ -1,0 +1,126 @@
+{% extends "base.html" %} {% block content %}
+<main>
+  <div class="container-fluid">
+
+    <!-- Section: Edit Account -->
+    <section class="section">
+      <div class="row">
+        <a href="#" id="removeThis" class="btn btn-rounded btn-danger">ELIMINA EXTRA</a>
+      </div>
+      <!-- First row -->
+      <div class="row" style="margin-top: 20px;">
+        <!-- First column -->
+        <div class="col-lg-4 mb-4">
+
+          <!-- Card -->
+          <div class="card card-cascade narrower">
+
+            <!-- Card image -->
+            <div class="view view-cascade gradient-card-header primary-color">
+              <h5 class="mb-0 font-weight-bold">Info</h5>
+            </div>
+            <!-- Card image -->
+
+            <!-- Card content -->
+            <div class="card-body card-body-cascade">
+            </div>
+            <!-- Card content -->
+
+          </div>
+          <!-- Card -->
+
+        </div>
+        <!-- First column -->
+
+        <!-- Second column -->
+        <div class="col-lg-8 mb-4">
+
+          <!-- Card -->
+          <div class="card card-cascade narrower">
+
+            <!-- Card image -->
+            <div class="view view-cascade gradient-card-header primary-color">
+              <h5 class="mb-0 font-weight-bold">Profilo Sala</h5>
+            </div>
+            <!-- Card image -->
+
+            <!-- Card content -->
+            <div class="card-body card-body-cascade text-center">
+                            <!-- Edit Form -->
+              <form action="" method="POST" autocomplete="off" id="formOK">
+                <!-- First row -->
+
+                <div class="row">
+                  <!-- First column -->
+                  <div class="col-md-12">
+                    <div class="md-form mb-0">
+                      <input name="nome" type="text" id="form1" class="form-control
+                        validate" value="{{extra.nome}}" disabled>
+                      <label for="form1" data-error="wrong"
+                        data-success="right">Nome</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <!-- First column -->
+                  <div class="col-md-12">
+                    <div class="md-form mb-0">
+                      <input name="prezzo" type="text" id="form1" class="form-control
+                        validate" value="{{extra.prezzo}}" disabled>
+                      <label for="form1" data-error="wrong"
+                        data-success="right">Euro €</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                      <div class="md-form mb-0">
+                        <textarea name="noteExtra" type="text" id="noteExtra" class="md-textarea
+                          form-control" rows="3" disabled>{{extra.noteExtra}}</textarea>
+                        <label for="form78">Note Extra</label>
+                      </div>
+                    </div>
+              </div>
+                <div class="row">
+                  <div class="col-md-12 text-center my-4">
+                      <a id="sub" class="btn btn-info btn-rounded primary-color">Modifica Dati</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- Card content -->
+
+          </div>
+          <!-- Card -->
+
+        </div>
+        <!-- Second column -->
+
+      </div>
+      <!-- First row -->
+      <div class="row" style="margin-top: 20px;">
+      </div>
+    </section>
+    <!-- Section: Edit Account -->
+
+  </div>
+
+</main>
+{% endblock %} {% block script %}
+<!-- Main layout -->
+<script>
+    $("#sub").click(function() {
+        if ($(this).text() == "Modifica Dati"){
+            console.log("OK");
+            $(this).text("Conferma Modifiche");
+            $("#formOK").find("input").each(function(){
+                $(this).prop("disabled",false)
+            });
+            $("#data").pickadate();
+            $("#noteExtra").prop("disabled",false);
+        }else{
+            $("#formOK").submit();
+        }
+    });
+</script>
+{% endblock %}

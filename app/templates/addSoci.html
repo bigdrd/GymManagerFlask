@@ -1,0 +1,243 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- Main layout -->
+<main>
+    <div class="container-fluid">
+        <!-- Section: Team v.1 -->
+        <form action="" method="POST" autocomplete="off">
+            <section class="section team-section">
+                <!-- Grid row -->
+                <div class="row">
+                    <!-- Grid column -->
+                    <div class="col-12">
+                        <!-- Card -->
+                        <div class="card card-cascade cascading-admin-card user-card">
+                            <!-- Card Data -->
+                            <div class="admin-up d-flex justify-content-start">
+                                <i class="fas fa-users pink py-4 mr-3 z-depth-2"></i>
+                                <div class="data">
+                                    <h5 class="font-weight-bold dark-grey-text">Socio - <span class="text-muted">Inserisci i dati</span></h5>
+                                </div>
+                            </div>
+                            <!-- Card Data -->
+
+                            <!-- Card content -->
+                            <div class="card-body card-body-cascade">
+                                <!-- Grid row -->
+                                <div class="row">
+                                    <!-- Grid column -->
+                                    <div class="col-3">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="nome" name="nome" type="text" class="form-control form-control-sm" required>
+                                            <label for="nome" class="">Nome</label>
+                                        </div>
+                                    </div>
+                                    <!-- Grid column -->
+
+                                    <!-- Grid column -->
+                                    <div class="col-3">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="cognome" name="cognome" type="text" class="form-control form-control-sm" required>
+                                            <label for="cognome" class="">Cognome</label>
+                                        </div>
+                                    </div>
+                                    <!-- Grid column -->
+
+                                    <!-- Grid column -->
+                                    <div class="col-3">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="dataNascita" name="dataNascita" type="text" class="form-control form-control-sm datepicker" required>
+                                            <label for="dataNascita" class="">Data Nascita</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="comuneNascita" name="comuneNascita" type="text" class="form-control form-control-sm" required>
+                                            <label for="comuneNascita" class="">Comune di Nascita</label>
+                                        </div>
+                                    </div>
+                                    <!-- Grid column -->
+                                </div>
+                                <!-- Grid row -->
+
+                                <!-- Grid row -->
+                                <div class="row">
+                                    <!-- Grid column -->
+
+                                    <!-- Grid column -->
+
+                                    <!-- Grid column -->
+                                    <div class="col-md-6">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="comuneResidenza" name="comuneResidenza" type="text" class="form-control form-control-sm" required>
+                                            <label for="comuneResidenza" class="">Comune di Residenza</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="viaResidenza" name="viaResidenza" type="text" class="form-control form-control-sm" required>
+                                            <label for="viaResidenza" class="">Via di Residenza</label>
+                                        </div>
+                                    </div>
+                                    <!-- Grid column -->
+                                </div>
+                                <div class="row">
+                                    <!-- Grid column -->
+
+                                    <!-- Grid column -->
+                                    <div class="col-4">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="codicePostaleResidenza" name="codicePostaleResidenza" type="text" class="form-control form-control-sm" required>
+                                            <label for="codicePostaleResidenza" class="">Codice postale</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="codiceFiscale" name="codiceFiscale" type="text" class="form-control form-control-sm" required>
+                                            <label for="codiceFiscale" class="">Codice Fiscale</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="cellulare" name="cellulare" type="text" class="form-control form-control-sm" required>
+                                            <label for="cellulare" class="">Cellulare</label>
+                                        </div>
+                                    </div>
+                                    <!-- Grid column -->
+                                </div>
+                                <!-- Grid row -->
+                                <!-- Grid row -->
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="email" name="email" type="text" class="form-control form-control-sm">
+                                            <label for="email" class="">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="md-form form-sm mb-0">
+                                            <input class="form-check-input" type="checkbox" id="checkbox2">
+                                            <label class="form-check-label" for="checkbox2">Tessera Tornello</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="codTessera" name="codTessera" type="text" class="form-control form-control-sm">
+                                            <label for="codTessera" class="">Codice tessera</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="md-form form-sm mb-0">
+                                            <input class="form-check-input" name="certificatoMedico" type="checkbox" id="checkbox3">
+                                            <label class="form-check-label" for="checkbox3">Certificato Medico</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Grid row -->
+                                <!-- Grid row -->
+                                <div style="margin-top: 20px;" class="row"><button style="margin-left: 15px;" id="add" type="button" class="btn btn-primary btn-sm">Aggiungi Corso</button></div>
+                                <div id="copy">
+                                    <div class="row" id="ok">
+                                        <div class="col-2">
+                                            <div class="md-form form-sm mb-0">
+                                                <select name="0_corso" class="mdb-select colorful-select dropdown-primary md-form" searchable="Cerca" required>
+                                                    <option value="" disabled selected>Corsi</option>
+                                                    {% for c in corsi %}
+                                                        <option value="{{c.id}}">{{c.nome}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="md-form form-sm mb-0">
+                                                <input name="0_euro" type="text" id="f2" class="form-control form-control-sm" required>
+                                                <label class="">Euro Mensile €</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-2" style="margin-top: 23px;">
+                                            <button id="remove" type="button" class="btn btn-danger btn-sm">-</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- Grid column -->
+                                    <div class="col-md-12">
+                                        <h4 class="text-muted text-left my-4">Note extra</h4>
+                                        <!-- Basic textarea -->
+                                        <div class="md-form mb-0">
+                                            <textarea id="noteExtra" name="noteExtra" type="text" id="form101" class="md-textarea form-control" rows="3"></textarea>
+                                            <label for="noteExtra">Inserisci qui</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-3"></div>
+                                    <div class="col-3"></div>
+                                    <div class="col-3 text-right">
+                                        <div class="md-form form-sm mb-0">
+                                            <input  type="submit" class="btn primary-color white-text btn-lg" value="CREA">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div class="card card-cascade cascading-admin-card user-card">
+                            <div class="admin-up d-flex justify-content-start">
+                                <i class="fas fa-plus green py-4 mr-3 z-depth-2"></i>
+                                <div class="data">
+                                    <h5 class="font-weight-bold dark-grey-text">Extra - <span class="text-muted">Inserisci i dati</span></h5>
+                                </div>
+                            </div>
+                            <div class="card-body card-body-cascade">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Team v.1 -->
+        </form>
+    </div>
+</main>
+<!-- Main layout -->
+{% endblock %} {% block script %}
+
+<!-- SCRIPTS -->
+<script>
+    // SideNav Initialization
+
+    $(".button-collapse").sideNav();
+
+    // Data Picker Initialization
+    $(".datepicker").pickadate();
+
+    // Material Select Initialization
+    $(document).ready(function () {
+        $(".mdb-select").materialSelect();
+        var index = 0;  
+        $("#add").click(function() {
+            var lastField = $("#copy div.row:last");
+
+            clone = lastField.clone();
+            clone.find("select").each(function(){
+                $(this).attr("name",index + $(this).attr("name"));
+            });
+            euro = clone.find("#f2");
+            euro.attr("name",index + euro.attr("name"));
+            index++;
+            var removeButton = clone.find("#remove");
+            removeButton.click(function() {
+                $(this).closest(".row").remove();
+            }); 
+            $("#copy").append(clone);
+            $('select.mdb-select').materialSelect({destroy: true});
+            $('select.mdb-select').materialSelect();
+        });
+    });
+</script>
+{% endblock %}

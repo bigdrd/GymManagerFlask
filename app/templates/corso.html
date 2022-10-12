@@ -1,0 +1,313 @@
+{% extends "base.html" %} {% block content %}
+<main>
+  <div class="container-fluid">
+
+    <!-- Section: Edit Account -->
+    <section class="section">
+        <div class="row">
+          <a href="#" id="removeThis" class="btn btn-rounded btn-danger">ELIMINA CORSO</a>
+        </div>
+      <!-- First row -->
+      <div class="row" style="margin-top: 20px;">
+        <!-- First column -->
+        <div class="col-lg-5 mb-4">
+
+          <!-- Card -->
+          <div class="card card-cascade narrower">
+
+            <!-- Card image -->
+            <div class="view view-cascade gradient-card-header primary-color">
+              <h5 class="mb-0 font-weight-bold">Info</h5>
+            </div>
+            <!-- Card image -->
+
+            <!-- Card content -->
+            <div class="card-body card-body-cascade">
+              <div class="row">
+                <div class="col-md-8">
+                    <p class="mt-4 text-muted">Incasso Mensile Totale: <strong>{{corso.getTotaleIncassoMensile()}}€</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-md-8">
+                    <p class="mt-4 text-muted">Numero Soci Iscritti: <strong>{{corso.getNumeroIscrittiAlCorso()}}</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-md-8">
+                    <p class="mt-4 text-muted">Sale: <strong>{{corso.getSala()}}</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-md-6">
+                    <p class="mt-4 text-muted">Insegnanti del Corso: </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                  <form action="" method="POST" autocomplete="off" id="formRm">
+                    <input type="hidden" id="corsoDaCancellare" name="corsoDaCancellare" value="">
+                      <table class="table table-bordered">
+                      <tbody>
+                          {% for i in corso.getInsegnantiObj() %}
+                          <tr id="">
+                            <td><strong>{{i.nome}} {{i.cognome}}</strong></td>
+                            <td class="text-center">
+                              <select id="modPModifica_{{i.id}}" style="margin-top: 0px;" name="modPagamento" class="mdb-select colorful-select dropdown-primary md-form" searchable="Cerca" required disabled>
+                                <option id="mod_{{i.id}}" value="" disabled>Modalità</option>
+                                <option value="1"{% if i.getPagatoPerIlCorso(corso.id)[0] == "PERCENTUALE" %}selected="selected"{% endif %}>Percentuale</option>
+                                <option value="2"{% if i.getPagatoPerIlCorso(corso.id)[0] == "FISSO" %}selected="selected"{% endif %}>Fisso</option>
+                              </select>
+                            </td>
+                            <td class="text-center">
+                              <div style="margin-top: 25px;" class="md-form form-sm mb-0">
+                                  <input id="euroModifica_{{i.id}}" data-euro="{{i.getPagatoPerIlCorso(corso.id)[1]}}" name="euroModifica" type="text" value="" class="form-control form-control-sm" disabled />
+                                  <label for="euroModifica_{{i.id}}" class="">{{i.getPagatoPerIlCorso(corso.id)[1]}}</label>
+                              </div>
+                            </td>
+                            <td class="">
+                              <div class="row text-center">
+                                  <button id="{{i.id}}" style="margin-left: 13px; margin-top: -3px;" type="button" class="btn btn-primary btn-sm changeInsegnante"><i class="fas fa-pen pen"></i></button>
+                                  <button id="{{i.id}}" style="margin-top: -3px;" type="button" class="btn btn-danger btn-sm removeInsegnante"><i class="fas fa-trash-alt"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          {% endfor %}
+                          <tr class="text-center">
+                              <td>
+                                <select id="idInsegnanteDaAggiungere" name="addInsegnante" class="mdb-select colorful-select dropdown-primary md-form" searchable="Cerca" required>
+                                    <option value="" disabled selected>Insegnanti</option>
+                                    {% for i in corso.getInsegnantiIscrivibili() %}
+                                    <option value="{{i.id}}">{{i.nome}} {{i.cognome}}</option>
+                                    {% endfor %}
+                                </select>
+                              </td>
+                              <td>
+                                <select id="modPagamentoDaAggiungere" name="modPagamento" class="mdb-select colorful-select dropdown-primary md-form" searchable="Cerca" required>
+                                    <option value="" disabled selected>Modalità</option>
+                                    <option value="1">Percentuale</option>
+                                    <option value="2">Fisso</option>
+                                </select>
+                              </td>
+                              <td class="text-center">
+                                <div style="margin-top: 25px;" class="md-form form-sm mb-0">
+                                    <input id="euro" data-euro="" name="euroModifica" type="text" value="" class="form-control form-control-sm"/>
+                                    <label for="euro" class="">Euro/Percentuale</label>
+                                </div>
+                              </td>
+                              <td>
+                                <button style="margin-top:25px;" id="addInsegnante" type="button" class="btn btn-primary btn-sm">Aggiungi Insegnante</button>
+                              </td>
+                          </tr>
+                      </tbody>
+                      </table>
+                  </form>
+                </div>
+            </div>
+            </div>
+            <!-- Card content -->
+
+          </div>
+          <!-- Card -->
+
+        </div>
+        <!-- First column -->
+
+        <!-- Second column -->
+        <div class="col-lg-7 mb-4">
+
+          <!-- Card -->
+          <div class="card card-cascade narrower">
+
+            <!-- Card image -->
+            <div class="view view-cascade gradient-card-header primary-color">
+              <h5 class="mb-0 font-weight-bold">Profilo Corso</h5>
+            </div>
+            <!-- Card image -->
+
+            <!-- Card content -->
+            <div class="card-body card-body-cascade text-center">
+              <form action="" method="POST" autocomplete="off" id="formOK">
+                <!-- First row -->
+
+                <div class="row">
+
+                  <!-- First column -->
+                  <div class="col-md-6">
+                    <div class="md-form mb-0">
+                      <input name="nome" type="text" id="form1" class="form-control
+                        validate" value="{{corso.nome}}" disabled>
+                      <label for="form1" data-error="wrong"
+                        data-success="right">Nome</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="md-form mb-0">
+                          <textarea name="noteExtra" type="text" id="noteExtra" class="md-textarea
+                            form-control" rows="3" disabled>{{corso.noteExtra}}</textarea>
+                          <label for="form78">Note Extra</label>
+                        </div>
+                      </div>
+                </div>
+                <!-- Fourth row -->
+                <div class="row">
+                  <div class="col-md-12 text-center my-4">
+                      <a id="sub" class="btn btn-info btn-rounded primary-color">Modifica Dati</a>
+                  </div>
+                </div>
+                <!-- Fourth row -->
+
+              </form>
+            </div>
+            <!-- Card content -->
+
+          </div>
+          <!-- Card -->
+
+        </div>
+        <!-- Second column -->
+
+      </div>
+      <!-- First row -->
+      <div class="row" style="margin-top: 20px;">
+        <!-- First column -->
+        <div class="col-lg-12">
+
+          <!-- Card -->
+          <div class="card card-cascade narrower">
+
+            <!-- Card image -->
+            <div class="view view-cascade gradient-card-header primary-color">
+              <h5 class="mb-0 font-weight-bold">Soci Iscritti al Corso</h5>
+            </div>
+            <!-- Card image -->
+
+            <!-- Card content -->
+            <div class="card-body card-body-cascade">
+                <table id="dtMaterialDesignExample" class="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Nome Cognome</th>
+                        <th>Quanto Paga</th>
+                        <th>Stato Mensile</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for e in corso.getSociIscritti() %}
+                      <tr>
+                        <th scope="row">{{e.id}}</th>
+                        <td><a href="/socio/{{e.id}}"><strong>{{e.nome}} {{e.cognome}}</strong></a></td>
+                        <td><strong>€ {{corso.quantoPaga(e.id)}}</strong></td>
+                        <td><h5>{% if e.èInRegola() == False %} <a class="badge badge-danger fa-2x" style="margin-top: 15px;">No</a> {% else %} <a class="badge badge-success fa-2x" style="margin-top: 15px;">Si</a> {% endif %}</h5></td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section: Edit Account -->
+
+  </div>
+
+</main>
+{% endblock %} {% block script %}
+<!-- Main layout -->
+<script>
+    $("#sub").click(function() {
+        if ($(this).text() == "Modifica Dati"){
+            console.log("OK");
+            $(this).text("Conferma Modifiche");
+            $("#formOK").find("input").each(function(){
+                $(this).prop("disabled",false)
+            });
+            $("#noteExtra").prop("disabled",false);
+        }else{
+            $("#formOK").submit();
+        }
+    });
+    $(document).ready(function () {
+      $(".mdb-select").materialSelect();
+      $("#removeThis").click(function() {
+        bootbox.confirm({
+            message: "Vuoi eliminare <strong>{{corso.nome}}</strong> dal Sistema?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if(result == true){
+                  $.get( "../api/elimina/corso/{{corso.id}}", function( data ) {
+                    window.location.href = "../success";
+                  });
+                }
+            }
+        });
+      });
+    });
+
+    var euro = 0;
+    $("#euro").keyup(function () {
+        euro = $("#euro").val();
+        console.log(euro);
+    });
+    $("#addInsegnante").click(function () {
+        var idInsegnante = $("#idInsegnanteDaAggiungere").val();
+        var modPagamento = $("#modPagamentoDaAggiungere").val();
+        var idCorso = "{{corso.id}}";
+        if (idCorso != null) {
+            $.get("../api/addInsegnantiPerCorso/" + idCorso + "/" + idInsegnante + "/" + modPagamento + "/" + euro, function (data) {
+                location.reload()
+            });
+        }
+    });
+
+    $(".removeInsegnante").click(function () {
+        var idInsegnante = $(this).attr("id");
+        var idCorso = "{{corso.id}}";
+        $.get("../api/eliminaInsegnantiPerCorso/" + idCorso + "/" + idInsegnante, function (data) {
+            location.reload()
+        });
+    });
+
+    $(".changeInsegnante").click(function () {
+        var idInsegnante = $(this).attr("id");
+        var idCorso = "{{corso.id}}";
+        var euro = $("#euroModifica_"+idInsegnante).data("euro");
+        var mod = $("#modPModifica_" + idInsegnante).val()
+        $(this).removeClass("btn-primary");
+        $(this).addClass("btn-success");
+        $(this).parent().find(".pen").removeClass("fas fa-pen");
+        $(this).parent().find(".pen").addClass("fas fa-check");
+        $("#modPModifica_" + idInsegnante).materialSelect({destroy: true})
+        $("#modPModifica_" + idInsegnante).removeAttr("disabled")
+        $("#modPModifica_" + idInsegnante).materialSelect();
+        $("#modPModifica_" + idInsegnante).change(function () {
+          mod = $("#modPModifica_" + idInsegnante).val();
+        });
+        $("#euroModifica_" + idInsegnante).prop("disabled", false);
+        $("#euroModifica_" + idInsegnante).keyup(function () {
+            euro = $("#euroModifica_" + idInsegnante).val();
+        });
+        $(this).click(function () {
+            $.get("../api/modificaInsegnantiPerCorso/" + idCorso + "/" + idInsegnante + "/" + mod + "/" + euro, function (data) {
+                location.reload()
+            });
+        });
+    });
+</script>
+{% endblock %}

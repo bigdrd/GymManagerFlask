@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Main layout -->
+  <main>
+    <div class="container-fluid" id="frame1">
+      <form target="_blank" action="" method="POST" autocomplete="off" id="formOK">
+      <!-- Section: Heading -->
+      <section class="mb-4">
+
+        <div class="card">
+          <div class="card-body d-flex justify-content-between">
+            <h4 class="h4-responsive mt-3">Ricevuta n.{{numeroRicevuta}}</h4>
+
+            <div>
+              <a id="invio" class="btn btn-primary"><i class="fas fa-print left"></i>OK</a>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+      <!-- Section: Heading -->
+
+      <!-- Section: Invoice details -->
+      <section class="mb-4">
+
+        <div class="card">
+          <div class="card-body">
+
+            <!-- Grid row -->
+            <div class="row">
+
+              <!-- Grid column -->
+              <div class="col-md-6 text-left">
+
+                <p><small>Da:</small></p>
+                <p><strong>MB DANCE ACADEMY A.S.D</strong></p>
+                <p>Viale San Francesco 26/28</p>
+                <p>Passo Corese (RI), 02032</p>
+                <p><strong>Telefono:</strong> 076534275</p>
+                <p><strong>Cellulare:</strong> 3662139090</p>
+                <p><strong>Data di Oggi:</strong> {{dataOggi}}</p>
+                <div class="col-3" style="margin-left: -15px;">
+                  <input name="mod" type="hidden" id="mod" required>
+                  <select id="modP" class="mdb-select colorful-select dropdown-primary md-form" required>
+                    <option value="" disabled selected>Metodo di Pagamento</option>
+                    <option value="1">Contanti</option>
+                    <option value="2">Bonifico</option>
+                    <option value="3">Assegno</option>
+                  </select>
+                </div>
+                <div class="col-8" style="margin-left: -15px;">
+                  <div class="md-form mb-0">
+                                            <input name="include_genitore" class="form-check-input" type="checkbox" id="checkbox1">
+                                            <label class="form-check-label" for="checkbox1">Includi dati dei Genitori</label>
+                                        </div>
+                </div>
+              </div>
+              <!-- Grid column -->
+
+              <!-- Grid column -->
+              <div class="col-md-6 text-right">
+
+                <h4 class="h4-responsive"><small>Ricevuta n.</small><br /><strong><span class="blue-text">{{numeroRicevuta}}</span></strong></h4>
+
+                <p><small>A:</small></p>
+                {% for s in sociIntestatari %}
+                  <p><strong>{{ s.codiceFiscale }},</strong> {{s.nome}} {{s.cognome}} <br/> (Genitore: {{s.nome_genitore}} {{s.cognome_genitore}})</p>
+                {% endfor %}
+              </div>
+              <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+          </div>
+        </div>
+
+      </section>
+      <!-- Section: Invoice details -->
+
+      <!-- Section: Invoice table -->
+      <section class="mb-5">
+
+        <div class="card">
+          <div class="card-body">
+            {% set count = [] %}
+            {% for s in sociIntestatari %}
+              <div class="table" style="margin-bottom: 0px;">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="w-50"><strong>{{s.nome}} {{s.cognome}}</strong></th>
+                      <th class="w-25">Euro</th>
+                      <th class="w-25">Azioni</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for data,corsi in s.getCorsiPerMesiDaPagare() %}
+                    <tr id="{{count|length|string + '-' + s.id|string + '__' + corsi.id|string}}">
+                      <td><strong>Mensile {{data}}: </strong>{{corsi.nome}}</td>
+                      <td>€{{corsi.quantoPaga(s.id)}}</td>
+                      <td><input data-euro="{{corsi.quantoPaga(s.id)}}" name="{{'C' + count|length|string + '+' + s.id|string + '_' + corsi.id|string + '_' + data}}" id="checkbox{{count|length|string + '-' + s.id|string + '__' + corsi.id|string}}" class="form-check-input filled-in euro" type="checkbox" checked="checked"><label class="form-check-label" for="checkbox{{count|length|string + '-' + s.id|string + '__' + corsi.id|string}}"></label></td>
+                    </tr>
+                    {% set var = count.append(1) %}
+                    {% endfor %}
+                    {% for extra in s.getExtraDaPagare() %}
+                    <tr id="{{count|length|string + '-' + s.id|string + '_' + extra.id|string}}">
+                      <td><strong>Extra: </strong>{{extra.nome}}</td>
+                      <td>€{{extra.prezzo}}</td>
+                      <td><input data-euro="{{extra.prezzo}}" name="{{'E' + count|length|string + '+' + s.id|string + '_' + extra.id|string}}" id="checkbox{{count|length|string + '-' + s.id|string + '_' + extra.id|string}}" class="form-check-input filled-in euro" type="checkbox" checked="checked"><label class="form-check-label" for="checkbox{{count|length|string + '-' + s.id|string + '_' + extra.id|string}}"></label></td>
+                    </tr>
+                    {% set var = count.append(1) %}
+                    {% endfor %}
+                    {% for data,corsi in s.getCorsiPerMesiDaPagareAnticipo() %}
+                    <tr id="{{count|length|string + '-' + s.id|string + '__' + corsi.id|string}}">
+                      <td><strong>Mensile Anticipo {{data}}: </strong>{{corsi.nome}}</td>
+                      <td>€{{corsi.quantoPaga(s.id)}}</td>
+                      <td><input data-euro="{{corsi.quantoPaga(s.id)}}" name="{{'C' + count|length|string + '+' + s.id|string + '_' + corsi.id|string + '_' + data}}" id="checkbox{{count|length|string + '-' + s.id|string + '__' + corsi.id|string}}" class="form-check-input filled-in euro" type="checkbox" ><label class="form-check-label" for="checkbox{{count|length|string + '-' + s.id|string + '__' + corsi.id|string}}"></label></td>
+                    </tr>
+                    {% set var = count.append(1) %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div class="row" style="margin-left: 1px;margin-bottom: 50px;">
+                <div class="col-md-6">
+                    <div class="md-form mb-0">
+                        <textarea name="noteExtra-{{s.id}}" type="text" id="noteExtraID" class="md-textarea form-control" rows="1"></textarea>
+                        <label for="form78">Note Extra</label>
+                    </div>
+                </div>
+              </div>
+            {% endfor %}
+            <div class="row">
+              <div class="col-5"></div>
+              <div class="col-6"></div>
+              <div class="col-1">
+                <ul class="list-unstyled text-right">
+                  <li><div class="md-form form-sm text-right">
+                    <input name="sconto" type="text" id="sconto" class="form-control form-control-sm">
+                    <label for="form2" class="">Sconto €</label>
+                  </div></li>
+                  <li>
+                    <strong>TOTALE:</strong><span id="totale" class="float-right ml-3">€</span>
+                    <input name="euro" type="hidden" id="totaleFattura">
+                  </li>
+                </ul> 
+              </div>
+            </div>
+        </div>
+
+      </section>
+      <!-- Section: Invoice table -->
+    </form>
+    </div>
+    <div class="container-fluid" id="frame2">
+      <form action="/success" method="GET" autocomplete="off" id="formRed" novalidate>
+      </form> 
+    </div>
+  </main>
+  <!-- Main layout -->
+  {% endblock %}
+
+  {% block script %}
+
+
+  <!-- Custom scripts -->
+  <script>
+
+    // SideNav Initialization
+    $(".button-collapse").sideNav();
+    $(document).ready(function () {
+      var flag = false;
+      $('.mdb-select').materialSelect();
+      var mvar = 0;
+      $(".euro[checked='checked']").each(function() {
+            mvar += Number($(this).data("euro")); 
+      });
+      var sconto = 0;
+      $("#totale").text("€" + mvar);
+      $("#sconto").keyup(function(){
+        sconto = Number($(this).val())
+
+        $("#totale").text("€" + (mvar - sconto));
+      });
+
+      $('#modP').change(function () {
+          flag = true;
+          var selectedText = $(this).find("option:selected").text();
+          $("#mod").val(selectedText);
+      });
+
+      $(".euro").change(function() {
+          if(this.checked) {
+            mvar += Number($(this).data("euro"));
+            $("#totale").text("€" + (mvar - sconto));
+          }
+          else{
+            mvar -= Number($(this).data("euro"));
+            $("#totale").text("€" + (mvar - sconto));
+          }
+      });
+      $("#invio").click(function(){
+        if (mvar >= 0 && flag == true){
+          $("#totaleFattura").val($("#totale").text());
+          $("#formOK").submit();
+          $("#formRed").submit();
+        }else{
+          alert("Seleziona metodo di pagamento");
+        }
+      });
+
+    });
+
+  </script>
+{% endblock %}

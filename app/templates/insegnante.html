@@ -1,0 +1,373 @@
+{% extends "base.html" %} {% block content %}
+<main>
+  <div class="container-fluid">
+
+    <!-- Section: Edit Account -->
+    <section class="section">
+      <div class="row">
+          <a href="/stipendio/{{ins.id}}" id="" class="btn btn-rounded btn-dark">Stipendio</a>
+          <a id="" class="btn btn-rounded btn-dark">Imposta Messaggio</a>
+          <a href="#" id="removeThis" class="btn btn-rounded btn-danger">ELIMINA INSEGNANTE</a>
+      </div>
+      <!-- First row -->
+      <div class="row" style="margin-top: 20px;">
+        <!-- First column -->
+        <div class="col-lg-4 mb-4">
+
+          <!-- Card -->
+          <div class="card card-cascade narrower">
+
+            <!-- Card image -->
+            <div class="view view-cascade gradient-card-header primary-color">
+              <h5 class="mb-0 font-weight-bold">Info</h5>
+            </div>
+            <!-- Card image -->
+
+            <!-- Card content -->
+            <div class="card-body card-body-cascade">
+              <div class="row">
+                <div class="col-md-5">
+                    <p class="mt-4 text-muted">Stato Stipendio Mensile:</p>
+                </div>
+                <div class="col-md-3">
+                    <h2>{% if ins.checkIfStipendioPagatoQuestoMese() == False %} <a class="badge badge-danger fa-2x" style="margin-top: 15px;">No</a> {% else %} <a class="badge badge-success fa-2x" style="margin-top: 15px;">Si</a> {% endif %}</h2>
+                </div>
+            </div>
+              <div class="row">
+                <div class="col-md-8">
+                    <p class="mt-4 text-muted">Corsi: <strong>{{ins.getCorsi()}}</strong></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                    <p class="mt-4 text-muted">Stipendio: <strong>{{ins.getStipendioMensile()}}€</strong></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                      <table class="table table-bordered">
+                        <thead class="text-center">
+                          <tr>
+                            <th>Corso</th>
+                            <th>Modalità Pagamento</th>
+                            <th>Totale</th>
+                          </tr>
+                        </thead>
+                      <tbody>
+                          {% for i in ins.getStipendioMensileTable() %}
+                          <tr id="">
+                            <td class="text-center"><a href="/corso/{{i[3]}}"><strong>{{i[0]}}</strong></a></td>
+                            <td class="text-center"><strong>{{i[1]}}</strong></td>
+                            <td class="text-center"><strong>€{{i[2]}}</strong></td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                      </table>
+                </div>
+            </div>
+            </div>
+            <!-- Card content -->
+
+          </div>
+          <!-- Card -->
+
+        </div>
+        <!-- First column -->
+
+        <!-- Second column -->
+        <div class="col-lg-8 mb-4">
+
+          <!-- Card -->
+          <div class="card card-cascade narrower">
+
+            <!-- Card image -->
+            <div class="view view-cascade gradient-card-header primary-color">
+              <h5 class="mb-0 font-weight-bold">Profilo Insegnante</h5>
+            </div>
+
+            <div class="card-body card-body-cascade text-center">
+              <!-- Edit Form -->
+              <form action="" method="POST" autocomplete="off" id="formOK">
+                <!-- First row -->
+
+                <div class="row">
+
+                  <!-- First column -->
+                  <div class="col-md-6">
+                    <div class="md-form mb-0">
+                      <input name="nome" type="text" id="form1" class="form-control
+                        validate" value="{{ins.nome}}" disabled>
+                      <label for="form1" data-error="wrong"
+                        data-success="right">Nome</label>
+                    </div>
+                  </div>
+                  <!-- Second column -->
+                  <div class="col-md-6">
+                    <div class="md-form mb-0">
+                        <input name="cognome" type="text" id="form1" class="form-control
+                          validate" value="{{ins.cognome}}" disabled>
+                        <label for="form1" data-error="wrong"
+                          data-success="right">Cognome</label>
+                      </div>
+                  </div>
+                </div>
+                <!-- First row -->
+
+                <!-- First row -->
+                <div class="row">
+                  <!-- First column -->
+                  <div class="col-md-6">
+                    <div class="md-form mb-0">
+                        <input name="dataNascita" type="text" id="data" class="form-control
+                          " value="{{ins.dataNascita}}" disabled>
+                        <label for="form1" data-error="wrong"
+                          data-success="right">Data di Nascita</label>
+                    </div>
+                  </div>
+
+                  <!-- Second column -->
+                  <div class="col-md-6">
+                    <div class="md-form mb-0">
+                        <input name="comuneNascita" type="text" id="form1" class="form-control
+                        validate" value="{{ins.comuneNascita}}" disabled>
+                      <label for="form1" data-error="wrong"
+                        data-success="right">Comune di Nascita</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- First row -->
+
+                <!-- Second row -->
+                <div class="row">
+
+                  <!-- First column -->
+                  <div class="col-md-4">
+                    <div class="md-form mb-0">
+                        <input name="comuneResidenza" type="text" id="form1" class="form-control
+                        validate" value="{{ins.comuneResidenza}}" disabled>
+                      <label for="form1" data-error="wrong"
+                        data-success="right">Comune di Residenza</label>
+                    </div>
+                  </div>
+                  <!-- Second column -->
+
+                  <div class="col-md-4">
+                    <div class="md-form mb-0">
+                        <input  name="viaResidenza" type="text" id="form1" class="form-control
+                        validate" value="{{ins.viaResidenza}}" disabled>
+                      <label for="form1" data-error="wrong"
+                        data-success="right">Via di Residenza</label>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="md-form mb-0">
+                        <input name="codicePostaleResidenza" type="text" id="form1" class="form-control
+                        validate" value="{{ins.codicePostaleResidenza}}" disabled>
+                      <label for="form1" data-error="wrong"
+                        data-success="right">Codice Postale</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Second row -->
+
+                <!-- Third row -->
+                <div class="row">
+
+                  <!-- First column -->
+                  <div class="col-md-4">
+                    <div class="md-form mb-0">
+                        <input name="codiceFiscale" type="text" id="form1" class="form-control
+                        validate" value="{{ins.codiceFiscale}}" disabled>
+                      <label for="form1" data-error="wrong"
+                        data-success="right">Codice Fiscale</label>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="md-form mb-0">
+                        <input name="email" type="text" id="form1" class="form-control
+                        validate" value="{{ins.email}}" disabled>
+                      <label for="form1" data-error="wrong"
+                        data-success="right">Email</label>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="md-form mb-0">
+                        <input name="cellulare" type="text" id="form1" class="form-control
+                        validate" value="{{ins.cellulare}}" disabled>
+                      <label for="form1" data-error="wrong"
+                        data-success="right">Cellulare</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Third row -->
+                <div class="row">
+                    <div class="col-md-4">
+                      <div class="md-form mb-0 input-group">
+                        <input name="codTessera" id="inputCodCard" type="text" id="form1" class="form-control validate" value="{{ins.codTessera}}" disabled />
+                        <label for="form1" id="codCard" data-error="wrong" data-success="right">Codice Tessera</label>
+                        <div class="input-group-append">
+                            <button id="scanCard" style="display: none;" class="btn btn-primary btn-sm" type="button">Inserisci</button>
+                        </div>
+                    </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="md-form mb-0">
+                          <input name="certificatoMedico" class="form-check-input" type="checkbox" id="checkbox1" {% if ins.certificatoMedico == True %} checked="checked" {% endif %}  disabled>
+                          <label class="form-check-label" for="checkbox1">Certificato Medico</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="md-form mb-0">
+                          <textarea name="noteExtra" type="text" id="noteExtra" class="md-textarea
+                            form-control" rows="3" disabled>{{ins.noteExtra}}</textarea>
+                          <label for="form78">Note Extra</label>
+                        </div>
+                      </div>
+                </div>
+                <!-- Fourth row -->
+                <div class="row">
+                  <div class="col-md-12 text-center my-4">
+                      <a id="sub" class="btn btn-info btn-rounded primary-color">Modifica Dati</a>
+                  </div>
+                </div>
+                <!-- Fourth row -->
+
+              </form>
+              <!-- Edit Form -->              
+            </div>
+            <!-- Card content -->
+
+          </div>
+          <!-- Card -->
+
+        </div>
+        <!-- Second column -->
+
+      </div>
+      <!-- First row -->
+      <div class="row" style="margin-top: 20px;">
+        <!-- First column -->
+        <div class="col-lg-12">
+
+          <!-- Card -->
+          <div class="card card-cascade narrower">
+
+            <!-- Card image -->
+            <div class="view view-cascade gradient-card-header primary-color">
+              <h5 class="mb-0 font-weight-bold">Stipendi</h5>
+            </div>
+            <!-- Card image -->
+
+            <!-- Card content -->
+            <div class="card-body card-body-cascade">
+                <table id="dtMaterialDesignExample" class="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Data Pagamento</th>
+                        <th>Mese</th>
+                        <th>Euro</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for s in ins.getStipendioPagatiTable() %}
+                      <tr>
+                        <th scope="row">{{s.id}}</th>
+                        <td>{{s.rDate.strftime("%Y-%m-%d : %H:%M:%S")}}</td>
+                        <td><strong>{{s.mese}}</strong></td>
+                        <td><strong>€{{s.getEuro()[0]}}</strong></td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section: Edit Account -->
+
+  </div>
+
+</main>
+{% endblock %} {% block script %}
+<!-- Main layout -->
+<script>
+    $("#sub").click(function() {
+        if ($(this).text() == "Modifica Dati"){
+            console.log("OK");
+            $(this).text("Conferma Modifiche");
+            $("#formOK").find("input").each(function(){
+                $(this).prop("disabled",false)
+            });
+            $("#data").pickadate();
+            $("#noteExtra").prop("disabled",false);
+            $("#scanCard").css('display', '')
+            $("#scanCard").click(function () {
+                $.getJSON("../api/getLastCodCard", function (data) {
+                    console.log(data.cod);
+                    if (data.success == "1" ){
+                        $("#codCard").addClass("active");
+                        $("#inputCodCard").val(data.cod)
+                    } 
+                    else {
+                        $("#codCard").addClass("active");
+                        $("#inputCodCard").val("")
+                    }
+                });
+            });
+        }else{
+            $("#formOK").submit();
+        }
+    });
+
+    $(document).ready(function () {
+      $(".mdb-select").materialSelect();
+
+      $('#dtMaterialDesignExample').DataTable({"pagingType": "simple_numbers","order": [[ 0, "desc" ]]});
+      $('#dtMaterialDesignExample_wrapper').find('label').each(function () {
+        $(this).parent().append($(this).children());
+      });
+      $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('input').each(function () {
+        const $this = $(this);
+        $this.attr("placeholder", "Cerca");
+        $this.removeClass('form-control-sm');
+      });
+      $('#dtMaterialDesignExample_length').parent('div').remove()
+      $('#dtMaterialDesignExample_info').remove()
+      $('#dtMaterialDesignExample_filter').parent('div').removeClass().addClass("col-6")
+      $('#dtMaterialDesignExample_filter').attr('style', 'text-align: left !important');
+      $('#dtMaterialDesignExample_wrapper .dataTables_length').addClass('d-flex flex-row');
+      $('#dtMaterialDesignExample_wrapper .dataTables_filter').addClass('md-form');
+      $('#dtMaterialDesignExample_wrapper select').removeClass('custom-select custom-select-sm form-control form-control-sm');
+      $('#dtMaterialDesignExample_wrapper select').addClass('mdb-select');
+      $('#dtMaterialDesignExample_wrapper .mdb-select').materialSelect();
+      $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('label').remove();
+
+      $("#removeThis").click(function() {
+        bootbox.confirm({
+            message: "Vuoi eliminare <strong>{{ins.nome}} {{ins.cognome}}</strong> dal Sistema?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if(result == true){
+                  $.get( "../api/elimina/insegnante/{{ins.id}}", function( data ) {
+                    window.location.href = "../success";
+                  });
+                }
+            }
+        });
+      });
+    });
+</script>
+{% endblock %}

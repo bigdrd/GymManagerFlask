@@ -1,0 +1,98 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- Main layout -->
+<main>
+    <div class="container-fluid">
+        <!-- Section: Team v.1 -->
+        <form action="" method="POST" autocomplete="off" novalidate>
+            {{ form.hidden_tag() }}
+            <section class="section team-section">
+                {% if form.errors %} {{ form.errors }} {% endif %}
+                <!-- Grid row -->
+                <div class="row text-center">
+                    <!-- Grid column -->
+                    <div class="col-12">
+                        <!-- Card -->
+                        <div class="card card-cascade cascading-admin-card user-card">
+                            <!-- Card Data -->
+                            <div class="admin-up d-flex justify-content-start">
+                                <i class="fas fa-building red py-4 mr-3 z-depth-2"></i>
+                                <div class="data">
+                                    <h5 class="font-weight-bold dark-grey-text">Sala - <span class="text-muted">Inserisci i dati</span></h5>
+                                </div>
+                            </div>
+                            <!-- Card Data -->
+
+                            <!-- Card content -->
+                            <div class="card-body card-body-cascade">
+                                <!-- Grid row -->
+                                <div class="row">
+                                    <!-- Grid column -->
+                                    <div class="col-3">
+                                        <div class="md-form form-sm mb-0">
+                                            {{ form.nome(id="1",autocomplete="off",size=32,class_="form-control form-control-sm") }} {% for error in form.nome.errors %}
+                                            <span style="color: red;">[{{ error }}]</span>
+                                            {% endfor %}
+                                            <label for="1" class="">Nome della Sala</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Grid row -->
+                                <!-- Grid row -->
+                                <div class="row">
+                                    <!-- Grid column -->
+                                    <div class="col-md-12">
+                                        <h4 class="text-muted text-left my-4">Note extra</h4>
+
+                                        <!-- Basic textarea -->
+                                        <div class="md-form mb-0">
+                                            {{ form.noteExtra(id="2",autocomplete="off",size=32,class_="md-textarea form-control", rows="3") }} {% for error in form.noteExtra.errors %}
+                                            <span style="color: red;">[{{ error }}]</span>
+                                            {% endfor %}
+                                            <label for="2">Inserisci qui</label>
+                                        </div>
+                                    </div>
+                                    <!-- Grid column -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-3"></div>
+                                    <div class="col-3"></div>
+                                    <div class="col-3">
+                                        <div class="md-form form-sm mb-0">
+                                            {{ form.submit(class_="btn primary-color white-text btn-lg") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Grid row -->
+                            </div>
+                            <!-- Card content -->
+                        </div>
+                        <!-- Card -->
+                    </div>
+                    <!-- Grid column -->
+                </div>
+            </section>
+            <!-- Section: Team v.1 -->
+        </form>
+    </div>
+</main>
+<!-- Main layout -->
+{% endblock %} {% block script %}
+
+<!-- SCRIPTS -->
+<script>
+    // SideNav Initialization
+
+    $(".button-collapse").sideNav();
+
+    // Data Picker Initialization
+    $(".datepicker").pickadate();
+
+    // Material Select Initialization
+    $(document).ready(function () {
+        $(".mdb-select").materialSelect();
+    });
+    $("option[value='123']").prop("disabled", true);
+</script>
+{% endblock %}

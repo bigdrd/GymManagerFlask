@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Main layout -->
+<main>
+
+  <div class="container-fluid">
+
+    <!-- Section: Intro -->
+    <section class="mt-md-4 pt-md-2 mb-5 pb-4">
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+
+          <!-- Card -->
+          <div class="card card-cascade cascading-admin-card">
+
+            <!-- Card Data -->
+            <div class="admin-up">
+              <i class="far fa-money-bill-alt primary-color mr-3 z-depth-2"></i>
+              <div class="data">
+                <p class="text-uppercase">Entrate Mensili</p>
+                <h4 class="font-weight-bold dark-grey-text">{{incassoMensile}}€</h4>
+              </div>
+            </div>
+          </div>
+          <!-- Card -->
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+
+          <!-- Card -->
+          <div class="card card-cascade cascading-admin-card">
+
+            <!-- Card Data -->
+            <div class="admin-up">
+              <i class="fas fa-chart-line warning-color mr-3 z-depth-2"></i>
+              <div class="data">
+                <p class="text-uppercase">Uscite mensili</p>
+                <h4 class="font-weight-bold dark-grey-text">{{usciteMensili}}€</h4>
+              </div>
+            </div>
+          </div>
+          <!-- Card -->
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-xl-3 col-md-6 mb-md-0 mb-4">
+
+          <!-- Card -->
+          <div class="card card-cascade cascading-admin-card">
+
+            <!-- Card Data -->
+            <div class="admin-up">
+              <i class="fas fa-users light-blue lighten-1 mr-3 z-depth-2"></i>
+              <div class="data">
+                <p class="text-uppercase">Soci totali</p>
+                <h4 class="font-weight-bold dark-grey-text">{{sociTotali}}</h4>
+              </div>
+            </div>
+
+          </div>
+          <!-- Card -->
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-xl-3 col-md-6 mb-0">
+
+          <!-- Card -->
+          <div class="card card-cascade cascading-admin-card">
+
+            <!-- Card Data -->
+            <div class="admin-up">
+              <i class="fas fa-door-open red accent-2 mr-3 z-depth-2"></i>
+              <div class="data">
+                <p class="text-uppercase">Accesso al tornello</p>
+                <h4 class="font-weight-bold dark-grey-text">{{entrateTornello}}</h4>
+              </div>
+            </div>
+
+          </div>
+          <!-- Card -->
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </section>
+    <!-- Section: Intro -->
+
+    <!-- Section: Main panel -->
+    <section class="mb-5">
+
+      <!-- Card -->
+      <div class="card card-cascade narrower">
+
+        <!-- Section: Chart -->
+        <section>
+
+          <!-- Grid row -->
+          <div class="row">
+
+            <!-- Grid column -->
+            <div class="col-12 mr-0 pb-2">
+
+              <!-- Card image -->
+              <div class="view view-cascade gradient-card-header btn-primary">
+                <h2 class="h2-responsive mb-0 font-weight-500">Console di Gestione</h2>
+              </div>
+
+              <!-- Card content -->
+              <div class="card-body card-body-cascade ">
+                <div class="row">
+                  <div class="col-6">
+                    <h2 class="h2-responsive mb-0 font-weight-500">Soci</h2>
+                    <div class="row">
+                      <a href="/addSoci" id="" class="btn btn-rounded btn-primary">Crea Socio</a>
+                      <a href="/preRicevuta" id="" class="btn btn-rounded btn-primary">Ricevuta</a>
+                    </div>
+                    <hr /> 
+                  </div>
+                  <div class="col-6">
+                    <h2 class="h2-responsive mb-0 font-weight-500">Corsi</h2>
+                    <div class="row">
+                      <a href="/addCorsi" id="" class="btn btn-rounded btn-primary">Crea Corso</a>
+                    </div>
+                    <hr /> 
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <h2 class="h2-responsive mb-0 font-weight-500">Insegnanti</h2>
+                    <div class="row">
+                      <a href="/addInsegnante" id="" class="btn btn-rounded btn-primary">Crea Insegnante</a>
+                    </div>
+                    <hr />  
+                  </div>
+                  <div class="col-6">
+                    <h2 class="h2-responsive mb-0 font-weight-500">Sale</h2>
+                    <div class="row">
+                      <a href="/addSala" id="" class="btn btn-rounded btn-primary">Crea Sala</a>
+                    </div>
+                    <hr />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <h2 class="h2-responsive mb-0 font-weight-500">Uscite</h2>
+                    <div class="row">
+                      <a href="/addUscita" id="" class="btn btn-rounded btn-primary">Crea Uscita</a>
+                      <a href="/preStipendio" id="" class="btn btn-rounded btn-primary">Stipendio Insegnante</a>
+                    </div>
+                    <hr />                    
+                  </div>
+                  <div class="col-6">
+                    <h2 class="h2-responsive mb-0 font-weight-500">Resoconti</h2>
+                    <div class="row">
+                      <a target="_blank" href="/resGiornaliero" id="" class="btn btn-rounded btn-primary">Giornaliero</a>
+                      <a target="_blank" href="/resMensile" id="" class="btn btn-rounded btn-primary">Mensile</a>
+                  </div>
+                  <hr />                    
+                  </div>
+                </div>
+              </div>
+              <!-- Card content -->
+
+
+
+          </div>
+        </section>
+        <!-- Section: Chart -->
+
+        <!-- Section: Table -->
+        <section>
+          <div class="card card-cascade narrower z-depth-0">
+
+            <div class="view view-cascade gradient-card-header primary-color narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+
+              <a href="" class="white-text mx-3">Ultimi Eventi</a>
+            </div>
+
+            <div class="px-4">
+
+              <div class="">
+
+                <!--Table-->
+                <table id="dtMaterialDesignExample" class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Data</th>
+                      <th>Socio</th>
+                      <th>Evento</th>
+                      <th>Descrizione</th>
+                      <th>Euro</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for e in eventi %}
+                    {% if e.desc == "I" %}
+                    <tr>
+                      <th scope="row">{{e.id}}</th>
+                      <td>{{e.rDate.strftime("%Y-%m-%d : %H:%M:%S")}}</td>
+                      <td><strong>{{e.getSocio().nome + " " + e.getSocio().cognome}}</strong></td>
+                      <td><strong>Iscrizione Socio</strong></td>
+                      <td><strong>Iscrizione del Socio</strong></td>
+                      <td>-</td>
+                    </tr>
+                    {% elif e.desc == "IC" %}
+                    <tr>
+                      <th scope="row">{{e.id}}</th>
+                      <td>{{e.rDate.strftime("%Y-%m-%d : %H:%M:%S")}}</td>
+                      <td><strong>{{e.getSocio().nome + " " + e.getSocio().cognome}}</strong></td>
+                      <td><strong>Iscrizione Al Corso</strong></td>
+                      <td><strong>{{e.getCorso().nome}}</strong></td>
+                      <td>-</td>
+                    </tr>
+                    {% elif e.desc == "R" %}
+                    <tr>
+                      <th scope="row">{{e.id}}</th>
+                      <td>{{e.rDate.strftime("%Y-%m-%d : %H:%M:%S")}}</td>
+                      <td><strong>{{e.getSocio().nome + " " + e.getSocio().cognome}}</strong></td>
+                      <td><strong>Ricevuta</strong></td>
+                      <td><strong>{{e.getRicevuta().desc}}</strong></td>
+                      <td>€{{e.getRicevuta().euro}}</td>
+                    </tr>
+                    {% elif e.desc == "DC" %}
+                    <tr>
+                      <th scope="row">{{e.id}}</th>
+                      <td>{{e.rDate.strftime("%Y-%m-%d : %H:%M:%S")}}</td>
+                      <td><strong>{{e.getSocio().nome + " " + e.getSocio().cognome}}</strong></td>
+                      <td><strong>Disiscrizione</strong></td>
+                      <td><strong>{{e.getCorso().nome}}</strong></td>
+                      <td>-</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+              </table>
+                <!-- Table -->
+              </div>
+            </div>
+          </div>
+        </section>
+        <!--Section: Table-->
+      </div>
+      <!-- Card -->
+    </section>
+    <!-- Section: Main panel -->
+  </div>
+
+</main>
+<!-- Main layout -->
+{% endblock %}
+
+{% block script %}
+  <!-- Initializations -->
+  <script>
+
+    // Data Picker Initialization
+    $('.datepicker').pickadate();
+
+    // Material Select Initialization
+    $(document).ready(function () {
+      $('.mdb-select').materialSelect();
+
+      $('#dtMaterialDesignExample').DataTable({"pagingType": "simple_numbers","order": [[ 0, "desc" ]]});
+      $('#dtMaterialDesignExample_wrapper').find('label').each(function () {
+        $(this).parent().append($(this).children());
+      });
+      $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('input').each(function () {
+        const $this = $(this);
+        $this.attr("placeholder", "Cerca");
+        $this.removeClass('form-control-sm');
+      });
+      $('#dtMaterialDesignExample_length').parent('div').remove()
+      $('#dtMaterialDesignExample_info').remove()
+      $('#dtMaterialDesignExample_filter').parent('div').removeClass().addClass("col-6")
+      $('#dtMaterialDesignExample_filter').attr('style', 'text-align: left !important');
+      $('#dtMaterialDesignExample_wrapper .dataTables_length').addClass('d-flex flex-row');
+      $('#dtMaterialDesignExample_wrapper .dataTables_filter').addClass('md-form');
+      $('#dtMaterialDesignExample_wrapper select').removeClass('custom-select custom-select-sm form-control form-control-sm');
+      $('#dtMaterialDesignExample_wrapper select').addClass('mdb-select');
+      $('#dtMaterialDesignExample_wrapper .mdb-select').materialSelect();
+      $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('label').remove();
+    });
+
+    // Tooltips Initialization
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
+  </script>
+
+  <!-- Charts -->
+  <script>
+  </script>
+{% endblock %}

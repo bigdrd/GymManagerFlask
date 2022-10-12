@@ -1,0 +1,7 @@
+__pycache__
+.vscode
+migrations
+app/__pycache__
+venv
+.flaskenv
+dump.rdb

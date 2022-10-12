@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- Main layout -->
+<main>
+    <div class="container-fluid">
+        <!-- Section: Team v.1 -->
+        <form action="" method="POST" autocomplete="off" novalidate>
+            {{ form.hidden_tag() }}
+            <section class="section team-section">
+                {% if form.errors %} {{ form.errors }} {% endif %}
+                <!-- Grid row -->
+                <div class="row justify-content-center">
+                    <!-- Grid column -->
+                    <div class="col-4">
+                        <!-- Card -->
+                        <div class="card card-cascade cascading-admin-card user-card">
+                            <!-- Card Data -->
+                            <div class="admin-up d-flex justify-content-start">
+                                <i class="fas fa-money-bill-alt green py-4 mr-3 z-depth-2"></i>
+                                <div class="data">
+                                    <h5 class="font-weight-bold dark-grey-text">Stipendio - <span class="text-muted">Seleziona gli Insegnanti</span></h5>
+                                </div>
+                            </div>
+                            <!-- Card Data -->
+
+                            <!-- Card content -->
+                            <div class="card-body card-body-cascade">
+                                <!-- Grid row -->
+                                <div class="row justify-content-center">
+                                  <div class="md-form form-sm mb-0">
+                                    {{ form.ins(class='mdb-select colorful-select dropdown-primary md-form',searchable="Cerca") }} {% for error in form.ins.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                  <div class="md-form form-sm mb-0">
+                                    {{ form.submit(class_="btn primary-color white-text btn-lg") }}
+                                </div>
+                                </div>
+                            </div>
+                            <!-- Card content -->
+                        </div>
+                        <!-- Card -->
+                    </div>
+                    <!-- Grid column -->
+                </div>
+            </section>
+            <!-- Section: Team v.1 -->
+        </form>
+    </div>
+</main>
+<!-- Main layout -->
+{% endblock %} {% block script %}
+
+<!-- SCRIPTS -->
+<script>
+    // SideNav Initialization
+
+    $(".button-collapse").sideNav();
+    // Material Select Initialization
+    $(document).ready(function () {
+        $(".mdb-select").materialSelect();
+    });
+    $("option[value='123']").prop("disabled", true);
+</script>
+{% endblock %}

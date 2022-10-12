@@ -1,0 +1,150 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- Main layout -->
+<main>
+    <div class="container-fluid">
+        <!-- Section: Team v.1 -->
+        <form id="form1" action="" method="POST" autocomplete="off">
+            <section class="section team-section">
+                <!-- Grid row -->
+                <div class="row">
+                    <!-- Grid column -->
+                    <div class="col-12">
+                        <!-- Card -->
+                        <div class="card card-cascade cascading-admin-card user-card">
+                            <!-- Card Data -->
+                            <div class="admin-up d-flex justify-content-start">
+                                <i class="fas fa-award green py-4 mr-3 z-depth-2"></i>
+                                <div class="data">
+                                    <h5 class="font-weight-bold dark-grey-text">Corso - <span class="text-muted">Inserisci i dati</span></h5>
+                                </div>
+                            </div>
+                            <!-- Card Data -->
+
+                            <!-- Card content -->
+                            <div class="card-body card-body-cascade">
+                                <!-- Grid row -->
+                                <div class="row">
+                                    <!-- Grid column -->
+                                    <div class="col-3">
+                                        <div class="md-form form-sm mb-0">
+                                            <input id="1" name="nome" type="text" class="form-control form-control-sm" required>
+                                            <label for="1" class="">Nome del corso</label>
+                                        </div>
+                                    </div>
+                                    <!-- Grid column -->
+
+                                    <!-- Grid column -->
+                                    <div class="col-3">
+                                        <div class="md-form form-sm mb-0">
+                                            <select name="sale" class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Cerca" required>
+                                                <option value="" disabled selected>Sale</option>
+                                                {% for s in sale %}
+                                                    <option value="{{s.id}}">{{s.nome}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row"><button id="add" type="button" class="btn btn-primary btn-sm">Aggiungi Insegnante</button></div>
+                                    <div id="copy">
+                                        <div class="row" id="ok">
+                                            <div class="col-2">
+                                                <div class="md-form form-sm mb-0">
+                                                    <select name="0_insegnanti" class="mdb-select colorful-select dropdown-primary md-form" searchable="Cerca" required>
+                                                        <option value="" disabled selected>Insegnanti</option>
+                                                        {% for i in insegnanti %}
+                                                            <option value="{{i.id}}">{{i.nome}} {{i.cognome}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="md-form form-sm mb-0">
+                                                    <select name="0_modPagamento" class="mdb-select colorful-select dropdown-primary md-form" required>
+                                                        <option value="" disabled selected>Metodo di Pagamento</option>
+                                                        <option value="Fisso">Fisso</option>
+                                                        <option value="Percentuale">Percentuale</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="md-form form-sm mb-0">
+                                                    <input name="0_europercentuale" type="text" id="f2" class="form-control form-control-sm" required>
+                                                    <label class="">Euro/Percentuale</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-2" style="margin-top: 23px;">
+                                                <button id="remove" type="button" class="btn btn-danger btn-sm">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- Grid row -->
+                                <!-- Grid row -->
+                                <div class="row">
+                                    <!-- Grid column -->
+                                    <div class="col-md-12">
+                                        <h4 class="text-muted text-left my-4">Note extra</h4>
+
+                                        <!-- Basic textarea -->
+                                        <div class="md-form mb-0">
+                                            <textarea name="extra" type="text" id="form101" class="md-textarea form-control" rows="3"></textarea>
+                                            <label for="form10">Inserisci qui</label>
+                                        </div>
+                                    </div>
+                                    <!-- Grid column -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-3"></div>
+                                    <div class="col-3"></div>
+                                    <div class="col-3 text-right">
+                                        <div id="" class="md-form form-sm mb-0">
+                                            <input  type="submit" class="btn primary-color white-text btn-lg" value="CREA">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Grid row -->
+                            </div>
+                            <!-- Card content -->
+                        </div>
+                        <!-- Card -->
+                    </div>
+                    <!-- Grid column -->
+                </div>
+            </section>
+            <!-- Section: Team v.1 -->
+        </form>
+    </div>
+</main>
+<!-- Main layout -->
+{% endblock %} {% block script %}
+
+<!-- SCRIPTS -->
+<script>
+    $(document).ready(function () {
+        $(".mdb-select").materialSelect();
+        var index = 0;  
+        $("#add").click(function() {
+            var lastField = $("#copy div.row:last");
+
+            clone = lastField.clone();
+            clone.find("select").each(function(){
+                $(this).attr("name",index + $(this).attr("name"));
+            });
+            euro = clone.find("#f2");
+            euro.attr("name",index + euro.attr("name"));
+            index++;
+            var removeButton = clone.find("#remove");
+            removeButton.click(function() {
+                $(this).closest(".row").remove();
+            }); 
+            $("#copy").append(clone);
+            $('select.mdb-select').materialSelect({destroy: true});
+            $('select.mdb-select').materialSelect();
+        });
+    });
+
+</script>
+{% endblock %}

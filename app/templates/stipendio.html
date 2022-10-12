@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Main layout -->
+  <main>
+    <div class="container-fluid" id="frame1">
+      <form action="" method="POST" autocomplete="off" id="formOK">
+      <!-- Section: Heading -->
+      <section class="mb-4">
+
+        <div class="card">
+          <div class="card-body d-flex justify-content-between">
+            <h4 class="h4-responsive mt-3">Stipendio</h4>
+
+            <div>
+              <a id="invio" class="btn btn-primary"><i class="fas fa-print left"></i>OK</a>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+      <!-- Section: Heading -->
+
+      <!-- Section: Invoice details -->
+      <section class="mb-4">
+
+        <div class="card">
+          <div class="card-body">
+
+            <!-- Grid row -->
+            <div class="row">
+
+              <!-- Grid column -->
+              <div class="col-md-6 text-left">
+
+                <p><small>Da:</small></p>
+                <p><strong>MB DANCE ACADEMY A.S.D</strong></p>
+                <p>Viale San Francesco 26/28</p>
+                <p>Passo Corese (RI), 02032</p>
+                <p><strong>Telefono:</strong> 076534275</p>
+                <p><strong>Cellulare:</strong> 3662139090</p>
+                <p><strong>Data di Oggi:</strong> {{dataOggi}}</p>
+              </div>
+              <!-- Grid column -->
+
+              <!-- Grid column -->
+              <div class="col-md-6 text-right">
+                <p><small>A:</small></p>
+                {% for s in insIntestatari %}
+                  <p><strong>{{ s.codiceFiscale }},</strong> {{s.nome}} {{s.cognome}}</p>
+                {% endfor %}
+              </div>
+              <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+          </div>
+        </div>
+
+      </section>
+      <!-- Section: Invoice details -->
+
+      <!-- Section: Invoice table -->
+      <section class="mb-5">
+
+        <div class="card">
+          <div class="card-body">
+            {% for s in insIntestatari %}
+              <div class="table">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="w-50"><strong>{{s.nome}} {{s.cognome}}</strong></th>
+                      <th>Metodo Pagamento</th>
+                      <th>Totale</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in s.getStipendioMensileTable() %}
+                    <tr id="">
+                      <td><strong>Corso: </strong>{{i[0]}}</td>
+                      <td>{{i[1]}}</td>
+                      <td class="euro" data-euro="{{i[2]}}">€{{i[2]}}</td>
+                    </tr>  
+                    {% endfor %}            
+                  </tbody>
+                </table>
+              </div>
+            {% endfor %}
+            <div class="row">
+              <div class="col-5"></div>
+              <div class="col-6"></div>
+              <div class="col-1">
+                <ul class="list-unstyled text-right">
+                  <li><div class="md-form form-sm text-right">
+                    <input type="text" id="sconto" class="form-control form-control-sm">
+                    <label for="form2" class="">Sconto €</label>
+                  </div></li>
+                  <li>
+                    <strong>TOTALE:</strong><span id="totale" class="float-right ml-3">€</span>
+                    <input name="euro" type="hidden" id="totaleFattura">
+                  </li>
+                </ul> 
+              </div>
+            </div>
+        </div>
+
+      </section>
+      <!-- Section: Invoice table -->
+    </form>
+    </div>
+    <div class="container-fluid" id="frame2">
+      <form action="/success" method="GET" autocomplete="off" id="formRed" novalidate>
+      </form> 
+    </div>
+  </main>
+  <!-- Main layout -->
+  {% endblock %}
+
+  {% block script %}
+
+
+  <!-- Custom scripts -->
+  <script>
+
+    // SideNav Initialization
+    $(".button-collapse").sideNav();
+    $(document).ready(function () {
+      $('.mdb-select').materialSelect();
+      var mvar = 0;
+      var flag = "{{insIntestatari[0].checkIfStipendioPagatoQuestoMese()}}";
+      $(".euro").each(function() {
+            mvar += Number($(this).data("euro")); 
+      });
+      var sconto = 0;
+      $("#totale").text("€" + mvar);
+      $("#sconto").keyup(function(){
+        sconto = Number($(this).val())
+        $("#totale").text("€" + (mvar - sconto));
+      });
+
+      $("#invio").click(function(){
+        if (mvar != 0 && flag != "True"){
+          $("#totaleFattura").val($("#totale").text());
+          $("#formOK").submit();
+        }else{
+          if (mvar == 0){
+            alert("Zero Euro");
+          }
+          if (flag == "True"){
+            alert("Stipendio già pagato questo mese");
+          }
+        }
+      });
+    });
+
+  </script>
+{% endblock %}
