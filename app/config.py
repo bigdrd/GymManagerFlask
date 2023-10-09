@@ -9,7 +9,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///../../NONTOCCARE/app.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    PAYDAY = 8
+    PAYDAY = 15
     MESE_START = "2021-03"
     MESE_CORRENTE = datetime.now().strftime("%Y-%m")
     MESE_ANTICIPI_START = (datetime.now() + relativedelta(months=+1)).strftime("%Y-%m")
